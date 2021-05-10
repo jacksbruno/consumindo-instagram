@@ -10,7 +10,8 @@
 export default {
   data: () => ({
     dadosAlbum: '',
-    fotos: []
+    fotos: [],
+    token: ''
   }),
 
   created(){
@@ -20,7 +21,7 @@ export default {
   methods: {
     /* Busca Albuns */
     async buscaAlbumFotos(){
-      let resp = await this.$axios.get('https://graph.instagram.com/me/media?fields=id,caption&access_token=TOKEN-GERADO')
+      let resp = await this.$axios.get(`https://graph.instagram.com/me/media?fields=id,caption&access_token=${this.token}`)
 
       this.dadosAlbuns = resp.data.data.slice(0,4)
 
@@ -31,7 +32,7 @@ export default {
     },
     /* Busca fotos */
     async capturaFotos(id){
-      let resp = await this.$axios.get(`https://graph.instagram.com/${id}?fields=id,media_type,media_url,username,timestamp&access_token=TOKEN-GERADO`)
+      let resp = await this.$axios.get(`https://graph.instagram.com/${id}?fields=id,media_type,media_url,username,timestamp&access_token=${this.token}`)
 
       this.fotos.push(resp.data.media_url)
 
